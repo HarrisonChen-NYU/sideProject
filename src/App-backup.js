@@ -3,50 +3,47 @@ import './App.css';
 import Calendar from "react-calendar";
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 
-
-let CurrentMonth = new Date();
 
 function App() {
 
-  return (
-    
-  <div>
-  <div className="App">
-      <Splash/>
-      <Terms/>
-    </div>
-        </div>
-  );
+  const [state, setState] = useState({
+    account_linked: false,
+    balance: 0,
+    month: new Date(),
+  });
 
+
+  return (
+    <div className="App">
+      <br></br>
+      <h1>Cash Flow Application</h1>
+
+      <Terms state={state} setState={setState}/>
+    </div>
+  );
 }
 
-function Splash(){
-  return(
-  <div>
-    <br></br>
-      <h1>Cash Flow Application</h1>
-      <img class= "image" src = "https://bit.ly/2E0671T" alt = "Opening Image"></img>
-  </div>
-  )
-} 
 
-function Terms() {
-
-    const [click,setclicked] = useState(false);
-      
-      
+function Terms(props) {
     const handleClick = (event) => {
-      setclicked(true);
+      props.setState({
+        ...props.state,
+        account_linked: true
+      });
     }
 
     return(
       <div>
         <div className="box">
-          <Button class= "wechatBox" onClick={handleClick}>Link to WeChat/Alipay </Button>
+          <button class= "wechatBox" onClick={handleClick}>Link to WeChat/Alipay</button>
           {
-            (click) ? (<div><h5> You have Successfully Linked to Wechat/AliPay</h5><Onboarding/></div>) : null
+            (props.state.account_linked) ? (
+              <div>
+                <p>You have Successfully Linked to Wechat/AliPay</p>
+                <Onboarding {...props} />
+              </div>
+            ) : null
           }
         </div>
       </div>
@@ -54,72 +51,64 @@ function Terms() {
 
 }
 
-function getDaysInMonth() {
-  
-}
-    
-
-function Onboarding(){
-  const [day, setDay] = useState(new Date());
-
-  const onDayChange = (date) => {
-
-    console.log(date);
-
-    setDay(date);
-  }
-
-
+function Onboarding(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     const data = new FormData(event.target);
-    localStorage.setItem('budget', data.get("budget"));
+    // localStorage.setItem('budget', data.get("budget"));
+
+    props.setState({
+      ...props.state,
+      balance: data.get("budget")
+    });
+
     console.log(localStorage.getItem('budget'));
   }
 
-  
-  const [tap,settap] = useState(false);
-  const handleClick = (e) => {
-    settap(true);
-  }
-
-  function onClickMonth(month) {
-    CurrentMonth = month;
-    // let date = new Date(month.getYear(), month.getMonth(), 0);
-    // console.log(date.getDate());
-  }
-
   return(
-  <div>
-    <h2> <link href="https://fonts.googleapis.com/css?family=Abel|Fjalla+One&display=swap" rel="stylesheet">
-      </link>What is your budget for the month? </h2>
-    <form onSubmit={handleSubmit}>
-      <input 
-      name="budget"
-      className= "budgetInput"
-      type="number" />
-      <button type="submit" className="submitButton" onClick={handleClick} >SUBMIT</button>
-      {
-        // (click) ? (<div> Hi
-
-        // </div>)
-         (tap) ? (<div><h5>You have Successfully Set Up the App! </h5> 
-         <Schedule onDayChange={onDayChange} onClickMonth={onClickMonth} />  <Balance day={day} /></div>) : null
-      }
-    </form>
-  </div>
-  )
+    <div>
+      <h3> What is your budget for the month?</h3>
+      <form onSubmit={handleSubmit}>
+        <input 
+          name="budget"
+          className= "budgetInput"
+          type="number" />
+          <button type="submit" className="submitButton">SUBMIT</button>
+        {
+          (props.state.balance > 0) ? (
+            <div>
+              <p>You have Successfully Set Up the App! </p> 
+              <Schedule {...props} />
+              <Balance {...props} />
+            </div>) : null
+        }
+      </form>
+    </div>
+  );
 }
-  
- function Schedule(props) {
-    return (<Calendar
-      onChange={props.onDayChange}
-      onClickMonth={props.onClickMonth}
-    />);
- }
+
+function Schedule(props) {
+
+  function handleDateChange(date) {
+    props.setState({
+      ...props.state,
+      month: date,
+    });
+  }
+
+  return (
+    <Calendar
+      onChange={handleDateChange}
+      onClickMonth={handleDateChange}
+    />
+  );
+}
 
 
 function Balance(props) {
+
+    
 
   var Expenses = [
     [{name: "Daily Expense", price: 10}],
@@ -158,7 +147,7 @@ function Balance(props) {
 
 
   const budget =  localStorage.getItem('budget')
-  const balance = budget/30
+  const balance = budget/month
 
   const dayOfMonth = props.day.getDate();
   const day = dayOfMonth.toString()
@@ -182,15 +171,15 @@ function Balance(props) {
 
 
   return(
-  <Box class = "flexBox">
+  <div> 
     <label> <br></br> Today is {month + ' ' + day}</label>
-    <h3> Your Remaining Balance today: ${Math.round(balance) - 
-      Math.round(perDay)} </h3>
-      <h4> Expenses</h4>  
+    <h2> Your Remaining Balance today: ${Math.round(balance) - 
+      Math.round(perDay)} </h2>
+      <h3> Expenses</h3>  
     {(items) ? itemsMap : "You have no expenses yet"} 
     <br></br>
-  </Box>
+  </div>
   )
 }
-
 export default App;
+

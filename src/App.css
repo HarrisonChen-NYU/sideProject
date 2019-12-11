@@ -1,18 +1,116 @@
 .App {
   text-align: center;
-  background-color:green
+  background-image: url("https://bit.ly/347OJmv");
+  display: center;
+  height: 180vh;
+  flex-direction: column;
+  margin: 30px;
+  flex: 1;
 }
 
+.image{height: 150px;
+  width: 160px;
+  border-radius: 17px;
+  border-color: black;
+
+}
+
+h1{ color: forestgreen;
+font-display: bold;
+text-decoration: underline;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 4em;  
+/* border-color: black;
+border-style: solid;
+max-width: 70%;
+margin: auto;
+margin-bottom: 40px;
+border-radius: 5px; */
+}
+
+h2{color: forestgreen;
+  max-width: 80%;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 25px;
+  font-family: 'Abel', sans-serif;
+}
+
+h3{color: lightgreen;
+  font-size: 25px;
+  max-width: 70%;
+  margin: auto;
+  font-family: 'Abel', sans-serif;
+  margin-top: 20px;
+  margin-bottom: 45px;
+}
+h4{ color: lightgreen;
+  text-decoration: underline;
+  max-width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 20px;
+  font-family: 'Abel', sans-serif;
+  
+
+}
+h5{ color: forestgreen;
+  font-family: 'Abel', sans-serif;
+  font-size: 20px;
+  font-display: bold;
+  max-width: 50%;
+  margin: auto;
+  margin-bottom: 10px;
+}
+label{
+  color: lightgreen;
+  font-size: 20px;
+  font-family: 'Abel', sans-serif;
+  font-display: bold;
+}
+
+p{color:lightgreen;
+  font-family: 'Abel', sans-serif;
+  font-display: bold;
+}
 .contentBox{border: black;
   flex: 1;
-  margin-inline: 2000px;
+  margin-inline: 2000px; 
 
+}
+.splash{display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+
+
+}
+
+.budgetInput {
+  padding: 1em;
+  font-size: 1em;
+  margin: .5em;
+  border-radius: 4px;
+  font-family: 'Abel', sans-serif;
+}
+
+.submitButton {
+  padding: 1em;
+  font-size: 1em;
+  font-family: 'Abel', sans-serif;
 }
 
 .wechatBox{
   color: black;
+  font-weight: bold;
+  text-decoration: brown;
   background-color: lightgreen;
+  border-color: black;
   margin: 10px;
+  font-family: 'Abel', sans-serif;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 6px;
+
 
 }
 .react-calendar{
@@ -24,8 +122,16 @@ padding: 10px;
 box-shadow: 1px 2px;
 }
 
-
-
-.schedule {
-  text-align: centers
+.flexBox{ background-color: forestgreen;
+  margin: auto;
+  padding: 10px;
+  margin-top:70px;
+  max-width: 60%;
+  max-height: 30%;
+  border-radius: 80px;
+  border-style: soild;
+  border-color: black;
+  border-width: 100px;
+  padding: 5px;
 }
+
